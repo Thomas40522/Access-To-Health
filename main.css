@@ -1,0 +1,17 @@
+#main {
+  font-size: 25px;
+  font-weight: bold;
+  color: rgb(0, 62, 0);
+  margin-left: 20%;
+  margin-bottom: 20px;
+}
+
+.selection {
+  padding-left: 20px;
+  font-size: 17px;
+}
+
+.selection:hover {
+  color:rgb(0, 62, 0);
+  cursor: pointer;
+}

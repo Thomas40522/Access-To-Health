@@ -1,20 +1,12 @@
 google.charts.load('current', {
   'packages':['geochart'],
 });
-google.charts.setOnLoadCallback(drawRegionsMap);
 
-async function drawRegionsMap() {
-  // var data = google.visualization.arrayToDataTable([
-  //   ['Country', 'Popularity'],
-  //   ['Germany', 200],
-  //   ['United States', 300],
-  //   ['Brazil', 400],
-  //   ['Canada', 500],
-  //   ['France', 600],
-  //   ['RU', 700]
-  // ]);
+// google.charts.setOnLoadCallback(drawRegionsMap("http://localhost:8000/data-chance.csv"));
 
-  var data = google.visualization.arrayToDataTable(await getData());
+async function drawRegionsMap(url, header) {
+
+  var data = google.visualization.arrayToDataTable(await getData(url, header));
 
   var options = {};
 
@@ -23,15 +15,16 @@ async function drawRegionsMap() {
   chart.draw(data, options);
 }
 
-async function getData() {
-  var data = [['Country', 'Winning Chance']];
+async function getData(url, header) {
+  console.log('url')
+  var data = [header];
   await $.ajax({
     type: "GET",
-    url: "http://localhost:8000/data.csv",
+    url: url,
     dataType: "text",
     success: function(response) {
       response.split("\n").forEach((item) => {
-        data.push([item.split(",")[0], parseInt(item.split(",")[1])]);
+        data.push([item.split(",")[0], parseInt(parseFloat(item.split(",")[1]) * 100)/100.0]);
       })
     }
   })
